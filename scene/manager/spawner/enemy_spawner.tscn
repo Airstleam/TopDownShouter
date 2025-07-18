@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://hn8tlkwrxysx"]
+
+[ext_resource type="Script" uid="uid://rqosx188tlfb" path="res://scene/manager/spawner/enemy_spawner.gd" id="1_4h10p"]
+[ext_resource type="PackedScene" uid="uid://dobk4kycpqcpf" path="res://scene/game_objects/goblin/goblin.tscn" id="2_lcwtb"]
+[ext_resource type="PackedScene" uid="uid://ce0cktefmqlod" path="res://scene/game_objects/Imp/imp.tscn" id="3_daxs4"]
+
+[node name="EnemySpawner" type="Node"]
+script = ExtResource("1_4h10p")
+goblin_scene = ExtResource("2_lcwtb")
+imp_scene = ExtResource("3_daxs4")
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

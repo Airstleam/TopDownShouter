@@ -1,0 +1,118 @@
+[gd_scene load_steps=23 format=3 uid="uid://ce0cktefmqlod"]
+
+[ext_resource type="Script" uid="uid://bougvkejuwf6d" path="res://scene/game_objects/goblin/goblin.gd" id="1_ys24i"]
+[ext_resource type="PackedScene" uid="uid://ecntlu5nwcse" path="res://scene/components/death_component.tscn" id="2_2ai00"]
+[ext_resource type="Texture2D" uid="uid://l2ncmcekusot" path="res://scene/game_objects/Imp/imp_idle_anim_f0.png" id="3_4cp7o"]
+[ext_resource type="PackedScene" uid="uid://eway8odlywkk" path="res://scene/components/health_component.tscn" id="4_kmecf"]
+[ext_resource type="PackedScene" uid="uid://mv0b2ts5qk1r" path="res://scene/components/exp_bottle_drop_component.tscn" id="5_06eag"]
+[ext_resource type="PackedScene" uid="uid://i4tyngyjfpvk" path="res://scene/components/movement_component.tscn" id="6_2ai00"]
+[ext_resource type="PackedScene" uid="uid://dh2vimc7hx063" path="res://scene/components/hurt_box_component.tscn" id="6_vl58l"]
+[ext_resource type="PackedScene" uid="uid://bv6jxvrhkokc5" path="res://scene/components/flash_component.tscn" id="7_kmecf"]
+[ext_resource type="Texture2D" uid="uid://bgw5btid8oykx" path="res://scene/game_objects/Imp/imp_idle_anim_f1.png" id="7_sxaev"]
+[ext_resource type="Shader" uid="uid://mm8fe8geocb0" path="res://scene/components/flash_component.gdshader" id="8_06eag"]
+[ext_resource type="Texture2D" uid="uid://b8i3x2rrpfi7h" path="res://scene/game_objects/Imp/imp_idle_anim_f2.png" id="8_nb20b"]
+[ext_resource type="PackedScene" uid="uid://dqctv4sqxwxd0" path="res://scene/components/hit_sound_component.tscn" id="9_06eag"]
+[ext_resource type="Texture2D" uid="uid://topmkdfeb1b0" path="res://scene/game_objects/Imp/imp_idle_anim_f3.png" id="9_80xpi"]
+[ext_resource type="Texture2D" uid="uid://bfi02obd6tj8m" path="res://scene/game_objects/Imp/imp_run_anim_f0.png" id="10_j7ghp"]
+[ext_resource type="Texture2D" uid="uid://i54ebgh43lny" path="res://scene/game_objects/Imp/imp_run_anim_f1.png" id="11_6cwdh"]
+[ext_resource type="Texture2D" uid="uid://c6g676v57crc1" path="res://scene/game_objects/Imp/imp_run_anim_f2.png" id="12_m6gu2"]
+[ext_resource type="Texture2D" uid="uid://cbyrf6a2fplq1" path="res://scene/game_objects/Imp/imp_run_anim_f3.png" id="13_urroi"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vl58l"]
+resource_local_to_scene = true
+shader = ExtResource("8_06eag")
+shader_parameter/percent = 0.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_moe3i"]
+radius = 9.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_clcr2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_4cp7o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_sxaev")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_nb20b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_80xpi")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_j7ghp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_6cwdh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_m6gu2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_urroi")
+}],
+"loop": true,
+"name": &"run",
+"speed": 7.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pfbk3"]
+radius = 4.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jbc44"]
+radius = 9.44476
+
+[node name="Imp" type="CharacterBody2D" groups=["enemy"]]
+collision_layer = 4
+collision_mask = 5
+script = ExtResource("1_ys24i")
+death_scene = ExtResource("2_2ai00")
+sprite = ExtResource("3_4cp7o")
+
+[node name="HealthComponent" parent="." instance=ExtResource("4_kmecf")]
+
+[node name="ExpBottleDropComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("5_06eag")]
+health_component = NodePath("../HealthComponent")
+
+[node name="MovementComponent" parent="." instance=ExtResource("6_2ai00")]
+
+[node name="FlashComponent" parent="." node_paths=PackedStringArray("health_component", "sprite") instance=ExtResource("7_kmecf")]
+health_component = NodePath("../HealthComponent")
+sprite = NodePath("../AnimatedSprite2D")
+flash_material = SubResource("ShaderMaterial_vl58l")
+
+[node name="HitSoundComponent" parent="." instance=ExtResource("9_06eag")]
+
+[node name="HurtBoxComponent" parent="." node_paths=PackedStringArray("health_component", "hit_sound_component") instance=ExtResource("6_vl58l")]
+health_component = NodePath("../HealthComponent")
+hit_sound_component = NodePath("../HitSoundComponent")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="HurtBoxComponent"]
+position = Vector2(0, -6)
+shape = SubResource("CircleShape2D_moe3i")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -8)
+sprite_frames = SubResource("SpriteFrames_clcr2")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -4)
+shape = SubResource("CircleShape2D_pfbk3")
+
+[node name="EnemyHitBox" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyHitBox"]
+position = Vector2(0, -6)
+scale = Vector2(0.741152, 0.741152)
+shape = SubResource("CircleShape2D_jbc44")

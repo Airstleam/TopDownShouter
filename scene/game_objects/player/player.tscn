@@ -1,0 +1,169 @@
+[gd_scene load_steps=28 format=3 uid="uid://dd2b5mvxl4kfu"]
+
+[ext_resource type="Texture2D" uid="uid://ihllf1nl2a45" path="res://scene/game_objects/player/knight_f_hit_anim_f0.png" id="1_2enb5"]
+[ext_resource type="Script" uid="uid://be7s8y5h06yys" path="res://scene/game_objects/player/player.gd" id="1_yn0h7"]
+[ext_resource type="Texture2D" uid="uid://bvfogphhpmwak" path="res://scene/game_objects/player/knight_f_idle_anim_f0.png" id="2_f0vuj"]
+[ext_resource type="PackedScene" uid="uid://ccxgotqvrgues" path="res://scene/abilities/attack_ability/attack_controller.tscn" id="2_xlcyt"]
+[ext_resource type="PackedScene" uid="uid://i4tyngyjfpvk" path="res://scene/components/movement_component.tscn" id="3_0ygly"]
+[ext_resource type="PackedScene" uid="uid://eway8odlywkk" path="res://scene/components/health_component.tscn" id="3_bjes5"]
+[ext_resource type="Texture2D" uid="uid://byg2r7u1h8hhn" path="res://scene/game_objects/player/knight_f_idle_anim_f1.png" id="3_jc11r"]
+[ext_resource type="PackedScene" uid="uid://bv6jxvrhkokc5" path="res://scene/components/flash_component.tscn" id="4_1tyhs"]
+[ext_resource type="Texture2D" uid="uid://2nutva20avqg" path="res://scene/game_objects/player/knight_f_idle_anim_f2.png" id="4_n3hjs"]
+[ext_resource type="Shader" uid="uid://mm8fe8geocb0" path="res://scene/components/flash_component.gdshader" id="5_0ygly"]
+[ext_resource type="Texture2D" uid="uid://u4p3nbnvfjdy" path="res://scene/game_objects/player/knight_f_idle_anim_f3.png" id="5_8xv46"]
+[ext_resource type="Texture2D" uid="uid://br8kkqsss3fjn" path="res://scene/game_objects/player/knight_f_run_anim_f0.png" id="6_ict1r"]
+[ext_resource type="Texture2D" uid="uid://iqce6rs0573" path="res://scene/game_objects/player/knight_f_run_anim_f1.png" id="7_p4l6m"]
+[ext_resource type="Texture2D" uid="uid://82tw3dmurxde" path="res://scene/game_objects/player/knight_f_run_anim_f2.png" id="8_un17s"]
+[ext_resource type="Texture2D" uid="uid://buery23g13txt" path="res://scene/game_objects/player/knight_f_run_anim_f3.png" id="9_1l6gx"]
+[ext_resource type="AudioStream" uid="uid://be8pqvmktqqs" path="res://assets/audio/hit/damage1.ogg" id="16_ab7uj"]
+[ext_resource type="AudioStream" uid="uid://xuxrtifmg3k6" path="res://assets/audio/hit/damage2.ogg" id="17_0nchg"]
+[ext_resource type="AudioStream" uid="uid://cpohirtd7iifb" path="res://assets/audio/hit/damage3.ogg" id="18_ptoag"]
+[ext_resource type="AudioStream" uid="uid://dipk2va1el3d7" path="res://assets/audio/hit/damage4.ogg" id="19_e2sng"]
+[ext_resource type="AudioStream" uid="uid://bnrpjp6mdcsm4" path="res://assets/audio/hit/damage5.ogg" id="20_lm3u3"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wfn55"]
+resource_local_to_scene = true
+shader = ExtResource("5_0ygly")
+shader_parameter/percent = 0.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fpv3a"]
+bg_color = Color(0.862745, 0.290196, 0.482353, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.133333, 0.133333, 0.133333, 1)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_50dvf"]
+radius = 32.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5tv1f"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_2enb5")
+}],
+"loop": true,
+"name": &"hit",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_f0vuj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_jc11r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_n3hjs")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_8xv46")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_ict1r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_p4l6m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_un17s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_1l6gx")
+}],
+"loop": true,
+"name": &"run",
+"speed": 7.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_t4e4t"]
+radius = 5.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bjes5"]
+radius = 5.0
+height = 18.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_vedbf"]
+streams_count = 5
+stream_0/stream = ExtResource("16_ab7uj")
+stream_1/stream = ExtResource("17_0nchg")
+stream_2/stream = ExtResource("18_ptoag")
+stream_3/stream = ExtResource("19_e2sng")
+stream_4/stream = ExtResource("20_lm3u3")
+
+[node name="Player" type="CharacterBody2D" groups=["player"]]
+collision_layer = 0
+script = ExtResource("1_yn0h7")
+
+[node name="AbilityManager" type="Node" parent="."]
+
+[node name="AttackController" parent="AbilityManager" instance=ExtResource("2_xlcyt")]
+
+[node name="MovementComponent" parent="." instance=ExtResource("3_0ygly")]
+max_speed = 90
+accelaration = 25.0
+
+[node name="HealthComponent" parent="." instance=ExtResource("3_bjes5")]
+
+[node name="FlashComponent" parent="." node_paths=PackedStringArray("health_component", "sprite") instance=ExtResource("4_1tyhs")]
+health_component = NodePath("../HealthComponent")
+sprite = NodePath("../AnimatedSprite2D")
+flash_material = SubResource("ShaderMaterial_wfn55")
+
+[node name="GracePeriod" type="Timer" parent="."]
+one_shot = true
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+custom_minimum_size = Vector2(24, 4)
+offset_left = -12.0
+offset_top = 3.0
+offset_right = 12.0
+offset_bottom = 7.0
+pivot_offset = Vector2(12, 2)
+theme_override_styles/fill = SubResource("StyleBoxFlat_fpv3a")
+max_value = 1.0
+value = 0.5
+show_percentage = false
+
+[node name="PickUpArea" type="Area2D" parent="."]
+visible = false
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickUpArea"]
+position = Vector2(0, -5)
+shape = SubResource("CircleShape2D_50dvf")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -14)
+sprite_frames = SubResource("SpriteFrames_5tv1f")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -5)
+shape = SubResource("CircleShape2D_t4e4t")
+
+[node name="PlayerHurtBox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerHurtBox"]
+position = Vector2(0, -8)
+scale = Vector2(1, 0.824368)
+shape = SubResource("CapsuleShape2D_bjes5")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_vedbf")
+pitch_scale = 8.0
+bus = &"SFX"
+
+[connection signal="timeout" from="GracePeriod" to="." method="_on_grace_period_timeout"]
+[connection signal="area_entered" from="PlayerHurtBox" to="." method="_on_player_hurt_box_area_entered"]
+[connection signal="area_exited" from="PlayerHurtBox" to="." method="_on_player_hurt_box_area_exited"]
