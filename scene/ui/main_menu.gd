@@ -13,3 +13,7 @@ func _on_options_button_2_pressed():
 
 func _on_quit_button_3_pressed():
 	get_tree().quit()
+
+
+func _on_upgrades_button_pressed() -> void:
+	get_tree().change_scene_to_file("res://scene/ui/meta_menu.tscn")

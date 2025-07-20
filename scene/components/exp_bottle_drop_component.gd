@@ -1,6 +1,6 @@
 extends Node
 
-@export var drop_procent = .5
+@export_range(0, 1) var drop_percent: float = .3
 @export var exp_bottle_scene: PackedScene
 @export var health_component: Node
 
@@ -8,7 +8,10 @@ func _ready():
 	(health_component as HealthComponent).died.connect(on_died)
 	
 func on_died ():
-	if randf() < drop_procent:
+	var drop_upgrade = MetaProgression.get_upgrade_quantity("experience_drop_chance") * 0.1
+	drop_percent += drop_upgrade
+	
+	if randf() > drop_percent:
 		return
 	
 	if exp_bottle_scene == null:

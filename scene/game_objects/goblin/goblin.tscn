@@ -17,6 +17,7 @@
 [ext_resource type="Shader" uid="uid://mm8fe8geocb0" path="res://scene/components/flash_component.gdshader" id="8_se60v"]
 [ext_resource type="Texture2D" uid="uid://chnshkvbkyl3n" path="res://scene/game_objects/goblin/goblin_run_anim_f3.png" id="8_xrn63"]
 [ext_resource type="PackedScene" uid="uid://dqctv4sqxwxd0" path="res://scene/components/hit_sound_component.tscn" id="9_6onfi"]
+[ext_resource type="PackedScene" uid="uid://b0c2qe551bfcx" path="res://scene/components/enemy_hit_box_component.tscn" id="18_6bvge"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6onfi"]
 resource_local_to_scene = true
@@ -66,9 +67,6 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_v7cw8"]
 radius = 4.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_p61hk"]
-radius = 9.44476
-
 [node name="Goblin" type="CharacterBody2D" groups=["enemy"]]
 collision_layer = 4
 collision_mask = 5
@@ -108,11 +106,5 @@ offset = Vector2(0, -8)
 position = Vector2(0, -4)
 shape = SubResource("CircleShape2D_v7cw8")
 
-[node name="EnemyHitBox" type="Area2D" parent="."]
-collision_layer = 16
-collision_mask = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyHitBox"]
-position = Vector2(0, -6)
-scale = Vector2(0.741152, 0.741152)
-shape = SubResource("CircleShape2D_p61hk")
+[node name="EnemyHitBox" parent="." instance=ExtResource("18_6bvge")]
+damage = 2
