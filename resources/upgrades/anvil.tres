@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="NewAbility" load_steps=3 format=3 uid="uid://cefck46hx3ea6"]
 
-[ext_resource type="PackedScene" uid="uid://c48gtq7h6t7lq" path="res://scene/abilities/anvil_ability/anvil_ability.tscn" id="1_7hn83"]
+[ext_resource type="PackedScene" uid="uid://dcmatcisvn3ee" path="res://scene/abilities/anvil_ability/anvil_ability_controller.tscn" id="1_7hn83"]
 [ext_resource type="Script" uid="uid://b0uy2dvl1nosy" path="res://resources/upgrades/new_ability.gd" id="2_7kwcj"]
 
 [resource]
