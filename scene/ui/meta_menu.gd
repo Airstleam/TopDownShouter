@@ -4,7 +4,6 @@ extends CanvasLayer
 
 @onready var grid_container: GridContainer = %GridContainer
 
-
 var meta_upgrade_card_scene = preload("res://scene/ui/meta_upgrade_card.tscn")
 
 func _ready():

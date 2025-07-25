@@ -5,12 +5,12 @@
 [ext_resource type="PackedScene" uid="uid://lma7i771e8vw" path="res://scene/ui/vignette.tscn" id="2_huacs"]
 [ext_resource type="TileSet" uid="uid://bngsx4ywmfs42" path="res://resources/world.tres" id="3_6ce3e"]
 [ext_resource type="Resource" uid="uid://bl7gyhfjswmja" path="res://resources/meta_upgrades/experience_drop_chance.tres" id="3_7ehty"]
-[ext_resource type="PackedScene" uid="uid://ck0s4gwknotod" path="res://scene/ui/meta_upgrade_card.tscn" id="6_7ehty"]
+[ext_resource type="Resource" uid="uid://bp08b4hux5cgy" path="res://resources/meta_upgrades/health_regeneration.tres" id="4_7ehty"]
 [ext_resource type="PackedScene" uid="uid://k0bryqcqx8mp" path="res://scene/ui/sound_button.tscn" id="7_1fwgo"]
 
 [node name="MetaMenu" type="CanvasLayer"]
 script = ExtResource("1_huacs")
-upgrades = Array[ExtResource("2_6ce3e")]([ExtResource("3_7ehty")])
+upgrades = Array[ExtResource("2_6ce3e")]([ExtResource("3_7ehty"), ExtResource("4_7ehty")])
 
 [node name="Vignette" parent="." instance=ExtResource("2_huacs")]
 layer = 2
@@ -42,18 +42,6 @@ size_flags_horizontal = 4
 theme_override_constants/h_separation = 16
 theme_override_constants/v_separation = 15
 columns = 2
-
-[node name="MetaUpgradeCard" parent="ScrollContainer/MarginContainer/GridContainer" instance=ExtResource("6_7ehty")]
-layout_mode = 2
-
-[node name="MetaUpgradeCard2" parent="ScrollContainer/MarginContainer/GridContainer" instance=ExtResource("6_7ehty")]
-layout_mode = 2
-
-[node name="MetaUpgradeCard3" parent="ScrollContainer/MarginContainer/GridContainer" instance=ExtResource("6_7ehty")]
-layout_mode = 2
-
-[node name="MetaUpgradeCard4" parent="ScrollContainer/MarginContainer/GridContainer" instance=ExtResource("6_7ehty")]
-layout_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 offset_right = 40.0

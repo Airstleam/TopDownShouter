@@ -7,6 +7,8 @@ extends CharacterBody2D
 @onready var anim = $AnimatedSprite2D
 @onready var movement_component = $MovementComponent
 
+@export var health_regen: int = 1
+
 var base_speed = 0
 
 var enemies_colliding = 0
@@ -15,7 +17,8 @@ var enemy_damage: int = 0
 func _ready():
 	base_speed = movement_component.max_speed
 	health_component.died.connect(on_died)
-	health_component.health_changed.connect(on_health_changed)
+	health_component.health_decreased.connect(on_health_decreased)
+	health_component.health_increased.connect(on_health_increase)
 	Global.ability_upgrade_added.connect(on_ability_upgrade_added)
 	health_update()
 
@@ -61,11 +64,13 @@ func _on_player_hurt_box_area_exited(area):
 func on_died():
 	queue_free()
 
-func on_health_changed():
+func on_health_decreased():
 	$AudioStreamPlayer2D.play()
 	Global.player_damaged.emit()
 	health_update()
 
+func on_health_increase():
+	health_update()
 
 func _on_grace_period_timeout():
 	check_if_damaged()
@@ -77,3 +82,8 @@ func on_ability_upgrade_added(upgrade: AbilityUpgrade, current_upgrades: Diction
 	elif upgrade.id == "move_speed":
 		movement_component.max_speed = base_speed + \
 		(base_speed * current_upgrades["move_speed"]["quantity"] * 0.1)
+
+
+func _on_health_regen_timer_timeout() -> void:
+	var health_regen_bonus = MetaProgression.get_upgrade_quantity("health_regeneration")
+	health_component.take_heal(health_regen + health_regen_bonus)

@@ -13,9 +13,10 @@
 [ext_resource type="Script" uid="uid://c60xs3diownc3" path="res://scene/level/camera_2d.gd" id="11_gavly"]
 [ext_resource type="PackedScene" uid="uid://lma7i771e8vw" path="res://scene/ui/vignette.tscn" id="12_bgstj"]
 
-[node name="Level" type="Node"]
+[node name="Level" type="Node" node_paths=PackedStringArray("arena_time_manager")]
 script = ExtResource("1_nngl3")
 end_screen_scene = ExtResource("2_jewbg")
+arena_time_manager = NodePath("ArenaTimeManager")
 
 [node name="Vignette" parent="." instance=ExtResource("12_bgstj")]
 

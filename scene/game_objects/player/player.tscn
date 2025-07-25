@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://dd2b5mvxl4kfu"]
+[gd_scene load_steps=29 format=3 uid="uid://dd2b5mvxl4kfu"]
 
 [ext_resource type="Texture2D" uid="uid://ihllf1nl2a45" path="res://scene/game_objects/player/knight_f_hit_anim_f0.png" id="1_2enb5"]
 [ext_resource type="Script" uid="uid://be7s8y5h06yys" path="res://scene/game_objects/player/player.gd" id="1_yn0h7"]
@@ -20,6 +20,7 @@
 [ext_resource type="AudioStream" uid="uid://cpohirtd7iifb" path="res://assets/audio/hit/damage3.ogg" id="18_ptoag"]
 [ext_resource type="AudioStream" uid="uid://dipk2va1el3d7" path="res://assets/audio/hit/damage4.ogg" id="19_e2sng"]
 [ext_resource type="AudioStream" uid="uid://bnrpjp6mdcsm4" path="res://assets/audio/hit/damage5.ogg" id="20_lm3u3"]
+[ext_resource type="PackedScene" uid="uid://i7wxpbvjh7en" path="res://scene/ui/mobile_controller.tscn" id="21_0nchg"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wfn55"]
 resource_local_to_scene = true
@@ -98,8 +99,11 @@ stream_3/stream = ExtResource("19_e2sng")
 stream_4/stream = ExtResource("20_lm3u3")
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
-collision_layer = 0
+collision_layer = 2
 script = ExtResource("1_yn0h7")
+
+[node name="MobileController" parent="." instance=ExtResource("21_0nchg")]
+layer = 0
 
 [node name="AbilityManager" type="Node" parent="."]
 
@@ -118,6 +122,10 @@ flash_material = SubResource("ShaderMaterial_wfn55")
 
 [node name="GracePeriod" type="Timer" parent="."]
 one_shot = true
+
+[node name="HealthRegenTimer" type="Timer" parent="."]
+wait_time = 3.0
+autostart = true
 
 [node name="ProgressBar" type="ProgressBar" parent="."]
 custom_minimum_size = Vector2(24, 4)
@@ -165,5 +173,6 @@ pitch_scale = 8.0
 bus = &"SFX"
 
 [connection signal="timeout" from="GracePeriod" to="." method="_on_grace_period_timeout"]
+[connection signal="timeout" from="HealthRegenTimer" to="." method="_on_health_regen_timer_timeout"]
 [connection signal="area_entered" from="PlayerHurtBox" to="." method="_on_player_hurt_box_area_entered"]
 [connection signal="area_exited" from="PlayerHurtBox" to="." method="_on_player_hurt_box_area_exited"]
