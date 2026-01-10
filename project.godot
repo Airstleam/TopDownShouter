@@ -12,7 +12,7 @@ config_version=5
 
 config/name="2d_top_down_shooter"
 run/main_scene="uid://l4ste517l86a"
-config/features=PackedStringArray("4.4", "Forward Plus")
+config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
